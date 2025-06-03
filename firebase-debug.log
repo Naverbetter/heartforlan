@@ -1,0 +1,28 @@
+[debug] [2025-06-03T03:26:43.028Z] ----------------------------------------------------------------------
+[debug] [2025-06-03T03:26:43.030Z] Command:       /nix/store/qds3rzxwqrkvhzjxgcb95d2qx4sd9b1l-nodejs-20.11.1/bin/node /home/user/.global_modules/bin/firebase login
+[debug] [2025-06-03T03:26:43.031Z] CLI Version:   14.5.1
+[debug] [2025-06-03T03:26:43.031Z] Platform:      linux
+[debug] [2025-06-03T03:26:43.031Z] Node Version:  v20.11.1
+[debug] [2025-06-03T03:26:43.031Z] Time:          Tue Jun 03 2025 03:26:43 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-06-03T03:26:43.031Z] ----------------------------------------------------------------------
+[debug] 
+[info] i  Firebase CLI integrates with Gemini in Firebase API to provide assistant features. Learn more about using Gemini in Firebase and how we train our models: https://firebase.google.com/docs/gemini-in-firebase/set-up-gemini#required-permissions 
+[info] 
+[info] i  Firebase optionally collects CLI and Emulator Suite usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you. 
+[debug] [2025-06-03T03:26:59.794Z] >>> [apiv2][query] POST https://auth.firebase.tools/attest [none]
+[debug] [2025-06-03T03:26:59.794Z] >>> [apiv2][body] POST https://auth.firebase.tools/attest {"session_id":"f713df88-fda5-45ab-9487-742723aa1af5"}
+[debug] [2025-06-03T03:27:00.233Z] <<< [apiv2][status] POST https://auth.firebase.tools/attest 200
+[debug] [2025-06-03T03:27:00.234Z] <<< [apiv2][body] POST https://auth.firebase.tools/attest {"token":"fz7cwcpYUHMlWEf4ucq-br0Qd3iw6N7YURMBfPmDiAA"}
+[info] 
+[info] To sign in to the Firebase CLI:
+[info] 
+[info] 1. Take note of your session ID:
+[info] 
+[info]    F713D
+[info] 
+[info] 2. Visit the URL below on any device and follow the instructions to get your code:
+[info] 
+[info]    https://auth.firebase.tools/login?code_challenge=w6_-jfD0Y_B7sOG-2AxMaYkJfbthL00RmbIzpj-EGEw&session=f713df88-fda5-45ab-9487-742723aa1af5&attest=fz7cwcpYUHMlWEf4ucq-br0Qd3iw6N7YURMBfPmDiAA
+[info] 
+[info] 3. Paste or enter the authorization code below once you have it:
+[info] 
