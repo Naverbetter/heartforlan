@@ -1,135 +1,130 @@
-<!DOCTYPE html><html lang="en">
-    <head>
-      <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Heart Explosion Animation</title>
-            <style>
-                body {
-                      margin: 0;
-                            overflow: hidden;
-                                  background-color: #ffdee9;
-                                        display: flex;
-                                              justify-content: center;
-                                                    align-items: center;
-                                                          height: 100vh;
-                                                              }.heart {
-                                                                position: relative;
-                                                                  width: 200px;
-                                                                    height: 200px;
-                                                                      background-color: red;
-                                                                        transform: rotate(45deg);
-                                                                          animation: pulse 2s infinite ease-in-out;
-                                                                          }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Heart Explosion Animation</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #ffdee9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    perspective: 800px;
+  }
+  .heart {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    transform: rotateZ(45deg) rotateX(0deg);
+    transform-style: preserve-3d;
+    animation: pulse 2s infinite ease-in-out;
+  }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    border-radius: 50%;
+  }
+  .heart::before { top: -100px; left: 0; }
+  .heart::after { left: -100px; top: 0; }
+  @keyframes pulse {
+    0%, 100% { transform: rotateZ(45deg) rotateX(0deg) scale(1); }
+    50% { transform: rotateZ(45deg) rotateX(0deg) scale(1.3); }
+  }
+  .small-heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    transform: rotateZ(45deg) rotateX(45deg);
+    transform-style: preserve-3d;
+    opacity: 0;
+    animation: explode 1s forwards;
+  }
+  .small-heart::before,
+  .small-heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+  }
+  .small-heart::before { top: -10px; left: 0; }
+  .small-heart::after { left: -10px; top: 0; }
+  @keyframes explode {
+    to {
+      transform: translate3d(var(--x), var(--y), var(--z)) scale(0.5) rotateZ(45deg) rotateX(45deg);
+      opacity: 1;
+    }
+  }
+  @keyframes implode {
+    to {
+      transform: translate3d(0,0,0) scale(1) rotateZ(45deg) rotateX(45deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="heart" id="bigHeart"></div>
+<script>
+let exploded = false;
 
-                                                                          .heart::before,
-                                                                          .heart::after {
-                                                                            content: "";
-                                                                              position: absolute;
-                                                                                width: 200px;
-                                                                                  height: 200px;
-                                                                                    background-color: red;
-                                                                                      border-radius: 50%;
-                                                                                      }
+function createBigHeart() {
+  const bigHeart = document.createElement('div');
+  bigHeart.classList.add('heart');
+  bigHeart.id = 'bigHeart';
+  document.body.appendChild(bigHeart);
+}
 
-                                                                                      .heart::before {
-                                                                                        top: -100px;
-                                                                                          left: 0;
-                                                                                          }
+function explodeHearts() {
+  for (let i = 0; i < 100; i++) {
+    const smallHeart = document.createElement('div');
+    smallHeart.classList.add('small-heart');
+    smallHeart.style.left = window.innerWidth / 2 + 'px';
+    smallHeart.style.top = window.innerHeight / 2 + 'px';
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * 300;
+    const z = (Math.random() * 400 - 200) + 'px';
+    const x = Math.cos(angle) * distance + 'px';
+    const y = Math.sin(angle) * distance + 'px';
+    smallHeart.style.setProperty('--x', x);
+    smallHeart.style.setProperty('--y', y);
+    smallHeart.style.setProperty('--z', z);
+    document.body.appendChild(smallHeart);
+  }
+}
 
-                                                                                          .heart::after {
-                                                                                            left: -100px;
-                                                                                              top: 0;
-                                                                                              }
+function implodeHearts() {
+  document.querySelectorAll('.small-heart').forEach(h => {
+    h.style.animation = 'implode 1s forwards';
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.small-heart').forEach(h => h.remove());
+    createBigHeart();
+    exploded = false;
+  }, 1000);
+}
 
-                                                                                              @keyframes pulse {
-                                                                                                0%, 100% {
-                                                                                                    transform: scale(1) rotate(45deg);
-                                                                                                      }
-                                                                                                        50% {
-                                                                                                            transform: scale(1.3) rotate(45deg);
-                                                                                                              }
-                                                                                                              }
-
-                                                                                                              .small-heart {
-                                                                                                                position: absolute;
-                                                                                                                  width: 20px;
-                                                                                                                    height: 20px;
-                                                                                                                      background-color: red;
-                                                                                                                        transform: rotate(45deg);
-                                                                                                                          opacity: 0;
-                                                                                                                            animation: explode 1s forwards;
-                                                                                                                            }
-
-                                                                                                                            .small-heart::before,
-                                                                                                                            .small-heart::after {
-                                                                                                                              content: "";
-                                                                                                                                position: absolute;
-                                                                                                                                  width: 20px;
-                                                                                                                                    height: 20px;
-                                                                                                                                      background-color: red;
-                                                                                                                                        border-radius: 50%;
-                                                                                                                                        }
-
-                                                                                                                                        .small-heart::before {
-                                                                                                                                          top: -10px;
-                                                                                                                                            left: 0;
-                                                                                                                                            }
-
-                                                                                                                                            .small-heart::after {
-                                                                                                                                              left: -10px;
-                                                                                                                                                top: 0;
-                                                                                                                                                }
-
-                                                                                                                                                @keyframes explode {
-                                                                                                                                                  to {
-                                                                                                                                                      transform: translate(var(--x), var(--y)) scale(0.5) rotate(45deg);
-                                                                                                                                                          opacity: 1;
-                                                                                                                                                            }
-                                                                                                                                                            }
-
-                                                                                                                                                              </style>
-                                                                                                                                                              </head>
-                                                                                                                                                              <body>
-                                                                                                                                                                <div class="heart" id="bigHeart"></div>  <script>
-                                                                                                                                                                    let exploded = false;
-
-                                                                                                                                                                        function createBigHeart() {
-                                                                                                                                                                              const bigHeart = document.createElement('div');
-                                                                                                                                                                                    bigHeart.classList.add('heart');
-                                                                                                                                                                                          bigHeart.id = 'bigHeart';
-                                                                                                                                                                                                document.body.appendChild(bigHeart);
-                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                        function explodeHearts() {
-                                                                                                                                                                                                              for (let i = 0; i < 100; i++) {
-                                                                                                                                                                                                                      const smallHeart = document.createElement('div');
-                                                                                                                                                                                                                              smallHeart.classList.add('small-heart');
-                                                                                                                                                                                                                                      smallHeart.style.left = window.innerWidth / 2 + 'px';
-                                                                                                                                                                                                                                              smallHeart.style.top = window.innerHeight / 2 + 'px';
-
-                                                                                                                                                                                                                                                      const angle = Math.random() * 2 * Math.PI;
-                                                                                                                                                                                                                                                              const distance = Math.random() * 300;
-                                                                                                                                                                                                                                                                      const x = Math.cos(angle) * distance + 'px';
-                                                                                                                                                                                                                                                                              const y = Math.sin(angle) * distance + 'px';
-
-                                                                                                                                                                                                                                                                                      smallHeart.style.setProperty('--x', x);
-                                                                                                                                                                                                                                                                                              smallHeart.style.setProperty('--y', y);
-
-                                                                                                                                                                                                                                                                                                      document.body.appendChild(smallHeart);
-                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                }
-
-                                                                                                                                                                                                                                                                                                                    document.body.addEventListener('touchstart', () => {
-                                                                                                                                                                                                                                                                                                                          if (!exploded) {
-                                                                                                                                                                                                                                                                                                                                  const bigHeart = document.getElementById('bigHeart');
-                                                                                                                                                                                                                                                                                                                                          if (bigHeart) bigHeart.remove();
-                                                                                                                                                                                                                                                                                                                                                  explodeHearts();
-                                                                                                                                                                                                                                                                                                                                                          exploded = true;
-                                                                                                                                                                                                                                                                                                                                                                } else {
-                                                                                                                                                                                                                                                                                                                                                                        document.querySelectorAll('.small-heart').forEach(h => h.remove());
-                                                                                                                                                                                                                                                                                                                                                                                createBigHeart();
-                                                                                                                                                                                                                                                                                                                                                                                        exploded = false;
-                                                                                                                                                                                                                                                                                                                                                                                              }
-                                                                                                                                                                                                                                                                                                                                                                                                  });
-                                                                                                                                                                                                                                                                                                                                                                                                    </script></body>
-                                                                                                                                                                                                                                                                                                                                                                                                    </html>
+document.body.addEventListener('touchstart', () => {
+  if (!exploded) {
+    const bigHeart = document.getElementById('bigHeart');
+    if (bigHeart) bigHeart.remove();
+    explodeHearts();
+    exploded = true;
+  } else {
+    implodeHearts();
+  }
+});
+</script>
+</body>
+</html>
